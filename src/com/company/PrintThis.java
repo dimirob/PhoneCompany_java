@@ -20,17 +20,17 @@ public class PrintThis {
         switch(serv){
             case 1:
                 for (int i=0;i<colls.getContractLength();i++){
-                    if (colls.getServiceType(Contracts.getContractService(colls.getFromContracts(i))).equals("com.company.DataServices")) System.out.println(colls.getFromContracts(i)); //print only Data contracts
+                    if (colls.getServiceType(Contracts.getContractService(colls.getFromContracts(i))).equals("Data Service")) System.out.println(colls.getFromContracts(i)); //print only Data contracts
                 }
                 break;
             case 2:
                 for (int i=0;i<colls.getContractLength();i++){
-                    if (colls.getServiceType(Contracts.getContractService(colls.getFromContracts(i))).equals("com.company.CardContract")) System.out.println(colls.getFromContracts(i)); //print only Card contracts
+                    if (colls.getServiceType(Contracts.getContractService(colls.getFromContracts(i))).equals("Card Contract")) System.out.println(colls.getFromContracts(i)); //print only Card contracts
                 }
                 break;
             case 3:
                 for (int i=0;i<colls.getContractLength();i++){
-                    if (colls.getServiceType(Contracts.getContractService(colls.getFromContracts(i))).equals("com.company.nonCardContract")) System.out.println(colls.getFromContracts(i)); //print only nonCard contracts
+                    if (colls.getServiceType(Contracts.getContractService(colls.getFromContracts(i))).equals("Non card contract")) System.out.println(colls.getFromContracts(i)); //print only nonCard contracts
                 }
                 break;
             default:

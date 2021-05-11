@@ -35,12 +35,12 @@ public class Contracts  {
         return cont.serviceName;
     }// getter for the service of the contract
     public String toString(){//toString that has an output depending on the contract service type
-        if (this.serviceName.getClass().getName().equals("com.company.DataServices")) return "Name: "+this.clientName+" client number: "+this.clientNumber+" activation date "+this.activationDate+" payment method: "+this.paymentMethod+" data: "+this.data+" special discount: "+this.discount;
+        if (this.serviceName.getType().equals("Data Service")) return "Name: "+this.clientName+" client number: "+this.clientNumber+" activation date "+this.activationDate+" payment method: "+this.paymentMethod+" data: "+this.data+" special discount: "+this.discount;
         else return "Name: "+this.clientName+" client number: "+this.clientNumber+" activation date "+this.activationDate+" payment method: "+this.paymentMethod+" minutes to cellphones: "+this.minutesToCell+" minutes to base phones: "+this.minutestoBase+" special discount: "+this.discount;
     }
     public static void setStats(Contracts con){//setter for the stats that depends on teh contracts service type
         Scanner sc=new Scanner(System.in);
-        if (con.serviceName.getClass().getName().equals("com.company.DataServices")){
+        if (con.serviceName.getType().equals("Data Service")){
             System.out.print("Enter data usage");
             con.data=sc.nextInt();
         }
@@ -55,7 +55,7 @@ public class Contracts  {
     }
     public static float getCost(CollectionofServandConts coll,Contracts con,Services serv){//function to get the cost of a contract, parameters:(CollectionofServandConts object,the contract and the service of the contract)
         switch(coll.getServiceType(serv)){
-            case "com.company.DataServices"://Data contract case:
+            case "Data Service"://Data contract case:
                 float fee=serv.getServiceFee();
                 int freedata=serv.getFreeData();
                 if (con.data<=freedata) return fee;
@@ -64,7 +64,7 @@ public class Contracts  {
                     float dataCost=serv.getDataCost();
                     return (float)fee+(con.data-freedata)*dataCost-(servDiscount+con.discount)*((con.data-freedata)*dataCost+fee);
                 }
-            case "com.company.nonCardContract"://non Card contract case
+            case "Non card contract"://non Card contract case
                 fee=serv.getServiceFee();
                 int freeMins=serv.getFreeMinutes();
                 int freeSMS=serv.getFreeSMS();
@@ -77,7 +77,7 @@ public class Contracts  {
                     float sumSMSCost=con.sms<=freeSMS?0:(con.sms-freeSMS)*smsCost;
                     return fee+sumMinCost+sumSMSCost-(fee+sumMinCost+sumSMSCost)*(con.discount+servDiscount);
                 }
-            case "com.company.CardContract"://card contract case
+            case "Card Contract"://card contract case
                 fee=serv.getServiceFee();
                 freeMins=serv.getFreeMinutes();
                 freeSMS=serv.getFreeSMS();

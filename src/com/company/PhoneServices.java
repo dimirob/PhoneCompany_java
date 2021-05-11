@@ -6,8 +6,8 @@ public class PhoneServices extends Services { //yphresia kinhths thlefwnias
     protected float minutesCost; //kostos leptwn meta apo dwrean
     protected float smsCost; //kostos sms meta apo dwrean
 
-    public PhoneServices(String name, float fee, int mins, int sms, float minCost, float smsCost) {
-        super(name, fee);
+    public PhoneServices(String name, float fee, int mins, int sms, float minCost, float smsCost,String type) {
+        super(name, fee,type);
         this.freeMinutes = mins;
         this.freeSMS = sms;
         this.minutesCost = minCost;

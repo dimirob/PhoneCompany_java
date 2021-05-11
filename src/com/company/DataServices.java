@@ -6,7 +6,7 @@ public class DataServices extends Services { //yphresia kinhtoy internet
     private float dataCost; //kostos dedomenwn meta apo dwrean
 
     public DataServices(String name, float fee, int freeData, float dataCost) {
-        super(name, fee);
+        super(name, fee,"Data Service");
         this.dataCost = dataCost;
         this.freeData = freeData;
     }

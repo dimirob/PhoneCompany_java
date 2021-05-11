@@ -3,11 +3,14 @@ package com.company;
 public abstract class Services{ //abstract class for services in general
     protected String serviceName; //service name
     protected float serviceFee; //service fee
-    public Services(String name,float fee){
+    protected String type;
+    public Services(String name,float fee,String type){
         this.serviceFee=fee;
         this.serviceName=name;
+        this.type=type;
     }
-    float getServiceFee(){return this.serviceFee;}
+    public String getType(){return this.type;}
+    public float getServiceFee(){return this.serviceFee;}
     abstract float getServiceDiscount();
     abstract float getDataCost();
     abstract int getFreeData();

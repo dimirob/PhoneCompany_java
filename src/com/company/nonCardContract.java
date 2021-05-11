@@ -4,7 +4,7 @@ public class nonCardContract extends PhoneServices { //non card Service
     private final float discount = (float) 0.2; //Standard discount for each contract
 
     public nonCardContract(String name, float fee, int mins, int sms, float minCost, float smsCost) {
-        super(name, fee, mins, sms, minCost, smsCost);
+        super(name, fee, mins, sms, minCost, smsCost,"Non card contract");
     }
 
     public String toString() {

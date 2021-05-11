@@ -5,7 +5,7 @@ public class CardContract extends PhoneServices { //card contract service
     private final float discount = (float) 0.25; //Ypothetoume ekptwsh pou dinetai sthn ekfwnhsh
 
     public CardContract(String name, float fee, int mins, int sms, float minCost, float smsCost, float startingBudget) {
-        super(name, fee, mins, sms, minCost, smsCost);
+        super(name, fee, mins, sms, minCost, smsCost,"Card Contract");
         this.budget = startingBudget;
     }
 

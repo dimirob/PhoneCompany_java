@@ -28,7 +28,7 @@ public class MainProgram {
         colls.addToCollection(new Contracts(colls.getFromServices(4), "Arhs Poulios", "23412352", "2020-12-11", "Card", 321, 13, 32, (float) 0.22));
         colls.addToCollection(new Contracts(colls.getFromServices(4), "Akhs Glykakis", "243516", "2020-12-11", "Cash", 31, 133, 321, (float) 0.12));
         colls.addToCollection(new Contracts(colls.getFromServices(5), "Natalia Gorlia", "42124154", "2020-12-11", "Cash", 1000, 122, 0, (float) 0.03));
-        colls.addToCollection(new Contracts(colls.getFromServices(5), "Giorgos Parasxos", "51862875", "2020-12-11", "Cash", 23, 12, 123, (float) 0.0)); //Initializing of contracts ends here
+        colls.addToCollection(new Contracts(colls.getFromServices(5), "Giorgos Basileas", "1235462346", "2020-12-11", "Cash", 23, 12, 123, (float) 0.0)); //Initializing of contracts ends here
 
         PrintThis.printMenu(); //Printing menu
         choice = sc.nextInt(); //User choice
@@ -41,7 +41,7 @@ public class MainProgram {
                     System.out.println("Choose Service by typing service number: ");
                     PrintThis.printServ(colls);
                     int serv = sc.nextInt(); //service number
-                    if (colls.getServiceType(colls.getFromServices(serv)).equals("com.company.DataServices")) //checking if the chosen service is a data service
+                    if (colls.getServiceType(colls.getFromServices(serv)).equals("Data Service")) //checking if the chosen service is a data service
                         Contracts.createDataCont(colls.getFromServices(serv), colls); //calling the function that creates a data contract object
                     else
                         Contracts.createTalkCon(colls.getFromServices(serv), colls); //calling the function that creates a non data contract object
@@ -74,7 +74,7 @@ public class MainProgram {
 
 
                 default:
-                    System.out.println("Invalid choice, please choose a valid choice from the menu"); //case of invalid input
+                    System.out.println("Invalid choice, please choose a valid choice from the menu!"); //case of invalid input
             }
             PrintThis.printMenu();
             choice = sc.nextInt();

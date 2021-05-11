@@ -26,7 +26,7 @@ public class CollectionofServandConts {
         return this.contractArray.size();
     }
     public String getServiceType(Services serv){
-        return serv.getClass().getName();
+        return serv.getType();
     }
     public int getConId(Contracts con){
         return this.contractArray.indexOf(con);
