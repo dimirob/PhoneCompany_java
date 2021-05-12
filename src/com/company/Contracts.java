@@ -31,26 +31,26 @@ public class Contracts  {
         this.data=data;
         this.discount=discount;
     }
-    public static Services getContractService(Contracts cont){
-        return cont.serviceName;
+    public Services getContractService(){
+        return this.serviceName;
     }// getter for the service of the contract
     public String toString(){//toString that has an output depending on the contract service type
         if (this.serviceName.getType().equals("Data Service")) return "Name: "+this.clientName+" client number: "+this.clientNumber+" activation date "+this.activationDate+" payment method: "+this.paymentMethod+" data: "+this.data+" special discount: "+this.discount;
         else return "Name: "+this.clientName+" client number: "+this.clientNumber+" activation date "+this.activationDate+" payment method: "+this.paymentMethod+" minutes to cellphones: "+this.minutesToCell+" minutes to base phones: "+this.minutestoBase+" special discount: "+this.discount;
     }
-    public static void setStats(Contracts con){//setter for the stats that depends on teh contracts service type
+    public void setStats(){//setter for the stats that depends on the contracts service type
         Scanner sc=new Scanner(System.in);
-        if (con.serviceName.getType().equals("Data Service")){
+        if (this.serviceName.getType().equals("Data Service")){
             System.out.print("Enter data usage");
-            con.data=sc.nextInt();
+            this.data=sc.nextInt();
         }
         else{
             System.out.println("Enter minutes to cell");
-            con.minutesToCell=sc.nextInt();
+            this.minutesToCell=sc.nextInt();
             System.out.println("Enter minutes to base phones");
-            con.minutestoBase=sc.nextInt();
+            this.minutestoBase=sc.nextInt();
             System.out.println("Enter SMS");
-            con.sms=sc.nextInt();
+            this.sms=sc.nextInt();
         }
     }
     public float getCost(){//function to get the cost of a contract, parameters:(CollectionofServandConts object,the contract and the service of the contract)
@@ -95,61 +95,62 @@ public class Contracts  {
         }
     }
 
-    public static void createDataCont(Services serv,CollectionofServandConts colls){
-        Scanner sc=new Scanner(System.in);
-        System.out.println("Client name: "); //Collecting data starts here
-        String name=sc.next();
-        System.out.println("Client number: ");
-        String num=sc.next();
-        System.out.println("Activation Date (In yyyy-mm-dd format): ");
-        String date=sc.next();
-        System.out.println("Payment method: ");
-        String payMethod=sc.next();
-        System.out.println("Data usage: ");
-        int data=sc.nextInt();
-        System.out.println("Special discount (if there is no discount enter 0): ");
-        float discount=sc.nextFloat(); //Collecting data ends here
-        colls.addToCollection(new Contracts(serv, name, num, date, payMethod, data, discount)); //new object added to the ArrayList
-
+    public static Contracts createCont(Services serv){//"Constructor" for a Contracts with UI
+        if (serv.getType().equals("Data Service")) {
+            Scanner sc = new Scanner(System.in);
+            System.out.println("Client name: "); //Collecting data starts here
+            String name = sc.next();
+            System.out.println("Client number: ");
+            String num = sc.next();
+            System.out.println("Activation Date (In yyyy-mm-dd format): ");
+            String date = sc.next();
+            System.out.println("Payment method: ");
+            String payMethod = sc.next();
+            System.out.println("Data usage: ");
+            int data = sc.nextInt();
+            System.out.println("Special discount (if there is no discount enter 0): ");
+            float discount = sc.nextFloat(); //Collecting data ends here
+            return new Contracts(serv, name, num, date, payMethod, data, discount);
+        }//new object added to the ArrayList
+        else{
+            Scanner sc = new Scanner(System.in);
+            System.out.println("Client name: "); //Collecting data starts here
+            String name=sc.next();
+            System.out.println("Client number: ");
+            String num=sc.next();
+            System.out.println("Activation Date (In yyyy-mm-dd format): ");
+            String date=sc.next();
+            System.out.println("Payment method: ");
+            String payMethod=sc.next();
+            System.out.println("Minutes to cell phones: ");
+            int minutesToCell=sc.nextInt();
+            System.out.println("Minutes to base phones: ");
+            int minutestoBase=sc.nextInt();
+            System.out.println("SMS: ");
+            int sms=sc.nextInt();
+            System.out.println("Special discount (if there is no discount enter 0): "); //Collecting data ends here
+            float discount=sc.nextFloat();
+            return new Contracts(serv, name, num, date, payMethod, minutesToCell,minutestoBase,sms, discount); //new object added to the ArrayList
+        }
     }
-    public static void createTalkCon(Services serv,CollectionofServandConts colls){
-        Scanner sc=new Scanner(System.in);
-        System.out.println("Client name: "); //Collecting data starts here
-        String name=sc.next();
-        System.out.println("Client number: ");
-        String num=sc.next();
-        System.out.println("Activation Date (In yyyy-mm-dd format): ");
-        String date=sc.next();
-        System.out.println("Payment method: ");
-        String payMethod=sc.next();
-        System.out.println("Minutes to cell phones: ");
-        int minutesToCell=sc.nextInt();
-        System.out.println("Minutes to base phones: ");
-        int minutestoBase=sc.nextInt();
-        System.out.println("SMS: ");
-        int sms=sc.nextInt();
-        System.out.println("Special discount (if there is no discount enter 0): "); //Collecting data ends here
-        float discount=sc.nextFloat();
-        colls.addToCollection(new Contracts(serv, name, num, date, payMethod, minutesToCell,minutestoBase,sms, discount)); //new object added to the ArrayList
-    }
-    public void getFree(){
+    public void getFree(){//func to get free stuff of a contract
         switch (this.serviceName.getType()){
-            case "Data Service":
+            case "Data Service"://data contract case
                 if (this.data<this.serviceName.getFreeData()) System.out.println("Remaining free data: "+(this.serviceName.getFreeData()-this.data));
                 else System.out.println("No remaining free data");
                 break;
-            case "Non card contract":
+            case "Non card contract"://non card contract case
                 if (this.minutestoBase+this.minutesToCell<this.serviceName.getFreeMinutes()) System.out.println("Remaining free minutes: "+(this.serviceName.getFreeMinutes()-(this.minutestoBase+this.minutesToCell)));
                 else System.out.println("No free minutes left");
                 if (this.sms<this.serviceName.getFreeSMS()) System.out.println("Remaining free SMS: "+(this.serviceName.getFreeSMS()-this.sms));
                 else System.out.println("No free SMS left");
                 break;
-            case "Card Contract":
+            case "Card Contract"://card contract case
                 if (this.minutestoBase+this.minutesToCell<this.serviceName.getFreeMinutes()) System.out.println("Remaining free minutes: "+(this.serviceName.getFreeMinutes()-(this.minutestoBase+this.minutesToCell)));
                 else System.out.println("No free minutes left");
                 if (this.sms<this.serviceName.getFreeSMS()) System.out.println("Remaining free SMS: "+(this.serviceName.getFreeSMS()-this.sms));
                 else System.out.println("No free SMS left");
-                System.out.println("Remaining budget: "+this.getCost());
+                System.out.println("Remaining budget: "+this.getCost());//getting the remaining budget implemented by getCost()
                 break;
             default:
                 System.out.println("Error");

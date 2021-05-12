@@ -41,10 +41,7 @@ public class MainProgram {
                     System.out.println("Choose Service by typing service number: ");
                     PrintThis.printServ(colls);
                     int serv = sc.nextInt(); //service number
-                    if (colls.getServiceType(colls.getFromServices(serv)).equals("Data Service")) //checking if the chosen service is a data service
-                        Contracts.createDataCont(colls.getFromServices(serv), colls); //calling the function that creates a data contract object
-                    else
-                        Contracts.createTalkCon(colls.getFromServices(serv), colls); //calling the function that creates a non data contract object
+                    colls.addToCollection(Contracts.createCont(colls.getFromServices(serv)));
                     break;
                 case 3:
                     System.out.println("Print 1 for Data Service contracts");
@@ -57,7 +54,7 @@ public class MainProgram {
                     PrintThis.printCon(colls);
                     System.out.println("Choose contract id to update stats: ");
                     int con = sc.nextInt(); //id of the contract that stats are getting updated
-                    Contracts.setStats(colls.getFromContracts(con)); //func for setting stats
+                    colls.getFromContracts(con).setStats(); //func for setting stats
                     System.out.println(colls.getFromContracts(con)); //print the contract
                     break;
                 case 5:
