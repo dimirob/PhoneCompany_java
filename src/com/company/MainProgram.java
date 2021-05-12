@@ -65,13 +65,14 @@ public class MainProgram {
                     System.out.println("Choose contract id to calculate cost: ");
                     con = sc.nextInt(); //id of the contract which its cost is going to be calculated
                     System.out.println(colls.getFromContracts(con)); //print the contract
-                    System.out.println("Contract total cost: " + Contracts.getCost(colls, colls.getFromContracts(con), Contracts.getContractService(colls.getFromContracts(con)))); //Contracts.getCost returns the cost of any contract
+                    System.out.println("Contract total cost: " + colls.getFromContracts(con).getCost()); //Contracts.getCost returns the cost of any contract
                     break;
                 case 6:
                     PrintThis.printCon(colls);
                     System.out.println("Choose contract id to calculate rest of free data, or SMS and Minutes to cell and base phones, or the remaining bugdet: ");
                     con=sc.nextInt(); //id of the contract which its free stuff is going to be calculated
-
+                    colls.getFromContracts(con).getFree();
+                    break;
 
                 default:
                     System.out.println("Invalid choice, please choose a valid choice from the menu!"); //case of invalid input

@@ -53,48 +53,49 @@ public class Contracts  {
             con.sms=sc.nextInt();
         }
     }
-    public static float getCost(CollectionofServandConts coll,Contracts con,Services serv){//function to get the cost of a contract, parameters:(CollectionofServandConts object,the contract and the service of the contract)
-        switch(coll.getServiceType(serv)){
+    public float getCost(){//function to get the cost of a contract, parameters:(CollectionofServandConts object,the contract and the service of the contract)
+        switch(this.serviceName.getType()){
             case "Data Service"://Data contract case:
-                float fee=serv.getServiceFee();
-                int freedata=serv.getFreeData();
-                if (con.data<=freedata) return fee;
+                float fee=this.serviceName.getServiceFee();
+                int freedata=this.serviceName.getFreeData();
+                if (this.data<=freedata) return fee;
                 else{
-                    float servDiscount=serv.getServiceDiscount();
-                    float dataCost=serv.getDataCost();
-                    return (float)fee+(con.data-freedata)*dataCost-(servDiscount+con.discount)*((con.data-freedata)*dataCost+fee);
+                    float servDiscount=this.serviceName.getServiceDiscount();
+                    float dataCost=this.serviceName.getDataCost();
+                    return fee+(this.data-freedata)*dataCost-(servDiscount+this.discount)*((this.data-freedata)*dataCost+fee);
                 }
             case "Non card contract"://non Card contract case
-                fee=serv.getServiceFee();
-                int freeMins=serv.getFreeMinutes();
-                int freeSMS=serv.getFreeSMS();
-                if(con.minutesToCell+con.minutestoBase<=freeMins & con.sms<=freeSMS) return fee;
+                fee=this.serviceName.getServiceFee();
+                int freeMins=this.serviceName.getFreeMinutes();
+                int freeSMS=this.serviceName.getFreeSMS();
+                if(this.minutesToCell+this.minutestoBase<=freeMins & this.sms<=freeSMS) return fee;
                 else{
-                    float servDiscount=serv.getServiceDiscount();
-                    float minCost=serv.getMinutesCost();
-                    float smsCost=serv.getSMSCost();
-                    float sumMinCost=con.minutesToCell+con.minutestoBase<=freeMins?0:(con.minutesToCell+con.minutesToCell-freeMins)*minCost;
-                    float sumSMSCost=con.sms<=freeSMS?0:(con.sms-freeSMS)*smsCost;
-                    return fee+sumMinCost+sumSMSCost-(fee+sumMinCost+sumSMSCost)*(con.discount+servDiscount);
+                    float servDiscount=this.serviceName.getServiceDiscount();
+                    float minCost=this.serviceName.getMinutesCost();
+                    float smsCost=this.serviceName.getSMSCost();
+                    float sumMinCost=this.minutesToCell+this.minutestoBase<=freeMins?0:(this.minutesToCell+this.minutesToCell-freeMins)*minCost;
+                    float sumSMSCost=this.sms<=freeSMS?0:(this.sms-freeSMS)*smsCost;
+                    return fee+sumMinCost+sumSMSCost-(fee+sumMinCost+sumSMSCost)*(this.discount+servDiscount);
                 }
             case "Card Contract"://card contract case
-                fee=serv.getServiceFee();
-                freeMins=serv.getFreeMinutes();
-                freeSMS=serv.getFreeSMS();
-                float budget=serv.getBudget();
-                float servDiscount=serv.getServiceDiscount();
-                float minCost=serv.getMinutesCost();
-                float smsCost=serv.getSMSCost();
-                float sumMinCost=con.minutesToCell+con.minutestoBase<=freeMins?0:(con.minutesToCell+con.minutesToCell-freeMins)*minCost;
-                float sumSMSCost=con.sms<=freeSMS?0:(con.sms-freeSMS)*smsCost;
-                float totalCost=fee+sumMinCost+sumSMSCost-(fee+sumMinCost+sumSMSCost)*(con.discount+servDiscount);
+                fee=this.serviceName.getServiceFee();
+                freeMins=this.serviceName.getFreeMinutes();
+                freeSMS=this.serviceName.getFreeSMS();
+                float budget=this.serviceName.getBudget();
+                float servDiscount=this.serviceName.getServiceDiscount();
+                float minCost=this.serviceName.getMinutesCost();
+                float smsCost=this.serviceName.getSMSCost();
+                float sumMinCost=this.minutesToCell+this.minutestoBase<=freeMins?0:(this.minutesToCell+this.minutesToCell-freeMins)*minCost;
+                float sumSMSCost=this.sms<=freeSMS?0:(this.sms-freeSMS)*smsCost;
+                float totalCost=fee+sumMinCost+sumSMSCost-(fee+sumMinCost+sumSMSCost)*(this.discount+servDiscount);
                 if(totalCost<=budget) return budget-totalCost;
                 else return budget;
             default:
                 return 0;
         }
     }
-    static void createDataCont(Services serv,CollectionofServandConts colls){
+
+    public static void createDataCont(Services serv,CollectionofServandConts colls){
         Scanner sc=new Scanner(System.in);
         System.out.println("Client name: "); //Collecting data starts here
         String name=sc.next();
@@ -111,7 +112,7 @@ public class Contracts  {
         colls.addToCollection(new Contracts(serv, name, num, date, payMethod, data, discount)); //new object added to the ArrayList
 
     }
-    static void createTalkCon(Services serv,CollectionofServandConts colls){
+    public static void createTalkCon(Services serv,CollectionofServandConts colls){
         Scanner sc=new Scanner(System.in);
         System.out.println("Client name: "); //Collecting data starts here
         String name=sc.next();
@@ -130,5 +131,28 @@ public class Contracts  {
         System.out.println("Special discount (if there is no discount enter 0): "); //Collecting data ends here
         float discount=sc.nextFloat();
         colls.addToCollection(new Contracts(serv, name, num, date, payMethod, minutesToCell,minutestoBase,sms, discount)); //new object added to the ArrayList
+    }
+    public void getFree(){
+        switch (this.serviceName.getType()){
+            case "Data Service":
+                if (this.data<this.serviceName.getFreeData()) System.out.println("Remaining free data: "+(this.serviceName.getFreeData()-this.data));
+                else System.out.println("No remaining free data");
+                break;
+            case "Non card contract":
+                if (this.minutestoBase+this.minutesToCell<this.serviceName.getFreeMinutes()) System.out.println("Remaining free minutes: "+(this.serviceName.getFreeMinutes()-(this.minutestoBase+this.minutesToCell)));
+                else System.out.println("No free minutes left");
+                if (this.sms<this.serviceName.getFreeSMS()) System.out.println("Remaining free SMS: "+(this.serviceName.getFreeSMS()-this.sms));
+                else System.out.println("No free SMS left");
+                break;
+            case "Card Contract":
+                if (this.minutestoBase+this.minutesToCell<this.serviceName.getFreeMinutes()) System.out.println("Remaining free minutes: "+(this.serviceName.getFreeMinutes()-(this.minutestoBase+this.minutesToCell)));
+                else System.out.println("No free minutes left");
+                if (this.sms<this.serviceName.getFreeSMS()) System.out.println("Remaining free SMS: "+(this.serviceName.getFreeSMS()-this.sms));
+                else System.out.println("No free SMS left");
+                System.out.println("Remaining budget: "+this.getCost());
+                break;
+            default:
+                System.out.println("Error");
+        }
     }
 }
